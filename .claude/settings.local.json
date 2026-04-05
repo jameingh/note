@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo:*)",
+      "Bash(/usr/local/bin/opencli-rs --help)",
+      "Bash(hash -v)",
+      "Bash(opencli-rs bilibili:*)",
+      "Bash(opencli-rs twitter:*)",
+      "Bash(opencli-rs explore:*)",
+      "Bash(opencli-rs generate:*)",
+      "Bash(opencli-rs doctor:*)",
+      "Bash(curl -sL \"https://t.co/lBlcHPYxhD\" -o /tmp/twitter_redirect.html)",
+      "Read(//tmp/**)",
+      "Bash(curl -sL \"https://x.com/Khazix0918/status/2037015170091016257\" -H \"Accept: text/html\")",
+      "Bash(curl -sL \"https://x.com/Khazix0918/status/2037015170091016257/photo/1\" -o /tmp/twitter_photo1.jpg)",
+      "Bash(curl:*)",
+      "Bash(pinchtab --version)",
+      "Bash(pinchtab --help)",
+      "Bash(pinchtab profiles:*)",
+      "Bash(pinchtab connect:*)",
+      "Bash(pinchtab quick:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Skill(bb-browser)",
+      "Bash(lsof -nP -i4TCP:9222)",
+      "Bash(bb-browser:*)",
+      "WebFetch(domain:x.com)",
+      "Bash(ls -la /Users/akm/Documents/mall/*.md)",
+      "mcp__plugin_serena_serena__check_onboarding_performed",
+      "mcp__plugin_serena_serena__activate_project",
+      "WebFetch(domain:claude.ai)",
+      "WebSearch",
+      "WebFetch(domain:www.anthropic.com)",
+      "mcp__plugin_serena_serena__write_memory",
+      "WebFetch(domain:arxiv.org)",
+      "WebFetch(domain:deepseek.ai)",
+      "WebFetch(domain:ar5iv.org)",
+      "WebFetch(domain:deepmind.google)",
+      "Bash(opencli-rs arxiv:*)"
+    ]
+  }
+}
