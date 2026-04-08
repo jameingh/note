@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>psychology-helper 技能评估 - Iteration 1</title>
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+        h1 { color: #333; border-bottom: 3px solid #4CAF50; padding-bottom: 10px; }
+        h2 { color: #555; margin-top: 30px; }
+        .card { background: white; border-radius: 8px; padding: 20px; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .pass { color: #4CAF50; font-weight: bold; }
+        .fail { color: #f44336; font-weight: bold; }
+        .prompt { background: #e3f2fd; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .output { background: #f9f9f9; padding: 15px; border-left: 4px solid #4CAF50; margin: 10px 0; }
+        .evaluation { margin-top: 15px; }
+        .assertion { padding: 8px; margin: 5px 0; border-radius: 4px; }
+        .assertion.pass { background: #e8f5e9; }
+        .assertion.fail { background: #ffebee; }
+        .summary { background: #fff3e0; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .nav { margin: 20px 0; }
+        .nav button { background: #4CAF50; color: white; border: none; padding: 10px 20px; margin: 5px; border-radius: 5px; cursor: pointer; }
+        .nav button:hover { background: #45a049; }
+        .feedback { margin-top: 20px; }
+        textarea { width: 100%; min-height: 100px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; resize: vertical; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #4CAF50; color: white; }
+        tr:hover { background: #f5f5f5; }
+    </style>
+</head>
+<body>
+    <h1>🧠 psychology-helper 技能评估</h1>
+    <p><strong>Iteration:</strong> 1 | <strong>日期:</strong> 2026-03-31</p>
+
+    <div class="summary">
+        <h2>📊 总体表现</h2>
+        <table>
+            <tr><th>指标</th><th>数值</th></tr>
+            <tr><td>通过率</td><td class="pass">100% (3/3)</td></tr>
+            <tr><td>断言通过</td><td class="pass">13/13</td></tr>
+            <tr><td>平均 Token</td><td>4,200</td></tr>
+            <tr><td>平均响应时间</td><td>15 秒</td></tr>
+        </table>
+    </div>
+
+    <div class="nav">
+        <h2>📋 测试用例导航</h2>
+        <button onclick="showEval(0)">1. 拖延问题</button>
+        <button onclick="showEval(1)">2. 自信不足</button>
+        <button onclick="showEval(2)">3. 孤独感</button>
+    </div>
+
+    <div id="eval-0" class="card">
+        <h2>测试用例 1: 拖延问题</h2>
+        <div class="prompt">
+            <strong>用户输入:</strong><br>
+            我总是拖延，明明知道有很多事要做，但就是控制不住刷手机，怎么办？
+        </div>
+        <div class="output">
+            <strong>技能输出要点:</strong>
+            <ul>
+                <li>✅ 正确匹配 17 号拖延实验</li>
+                <li>✅ 解释拖延是"理性与情感的较量"，是自我保护机制</li>
+                <li>✅ 短期建议：5 分钟法则、拆解任务</li>
+                <li>✅ 中期建议：记录触发点、建立奖励机制</li>
+                <li>✅ 长期建议：与内在自我对话、重新定义任务</li>
+                <li>✅ 语言温暖共情："不代表你有问题"、"你已经走在正确的路上了"</li>
+            </ul>
+        </div>
+        <div class="evaluation">
+            <strong>断言评估:</strong>
+            <div class="assertion pass">✓ 匹配 17 号拖延实验</div>
+            <div class="assertion pass">✓ 解释拖延机制</div>
+            <div class="assertion pass">✓ 提供短期建议</div>
+            <div class="assertion pass">✓ 提供长期建议</div>
+            <div class="assertion pass">✓ 语言共情</div>
+        </div>
+        <div class="feedback">
+            <strong>你的反馈:</strong>
+            <textarea placeholder="写下你的反馈..."></textarea>
+        </div>
+    </div>
+
+    <div id="eval-1" class="card" style="display:none;">
+        <h2>测试用例 2: 自信不足</h2>
+        <div class="prompt">
+            <strong>用户输入:</strong><br>
+            我从小到大都很自卑，总觉得自己不够好，怎么建立自信？
+        </div>
+        <div class="output">
+            <strong>技能输出要点:</strong>
+            <ul>
+                <li>✅ 正确匹配 09 号罗森塔尔实验（皮格马利翁效应）</li>
+                <li>✅ 解释"期望会塑造现实"</li>
+                <li>✅ 短期建议：记录成就清单、正面自我对话</li>
+                <li>✅ 中期建议：寻找支持性环境、设定小目标</li>
+                <li>✅ 长期建议：重新定义失败、建立成长型思维</li>
+                <li>✅ 鼓励到位："你不是不够好，只是还没看到自己的光芒"</li>
+            </ul>
+        </div>
+        <div class="evaluation">
+            <strong>断言评估:</strong>
+            <div class="assertion pass">✓ 匹配 09 号罗森塔尔实验</div>
+            <div class="assertion pass">✓ 解释标签效应</div>
+            <div class="assertion pass">✓ 提供具体方法</div>
+            <div class="assertion pass">✓ 语言鼓励</div>
+        </div>
+        <div class="feedback">
+            <strong>你的反馈:</strong>
+            <textarea placeholder="写下你的反馈..."></textarea>
+        </div>
+    </div>
+
+    <div id="eval-2" class="card" style="display:none;">
+        <h2>测试用例 3: 孤独感</h2>
+        <div class="prompt">
+            <strong>用户输入:</strong><br>
+            我一个人住，每天下班回家感觉很孤独，但是没有精力去社交
+        </div>
+        <div class="output">
+            <strong>技能输出要点:</strong>
+            <ul>
+                <li>✅ 正确匹配 01 号哈洛恒河猴实验</li>
+                <li>✅ 解释"亲密关系比物质满足更重要"</li>
+                <li>✅ 短期建议：线上微联结、自我关怀</li>
+                <li>✅ 中期建议：找到归属感、养宠物或植物</li>
+                <li>✅ 长期建议：培养深度关系、学会独处</li>
+                <li>✅ 共情到位："感到孤独不代表你有问题"</li>
+            </ul>
+        </div>
+        <div class="evaluation">
+            <strong>断言评估:</strong>
+            <div class="assertion pass">✓ 匹配 01 号哈洛恒河猴实验</div>
+            <div class="assertion pass">✓ 解释关系重要性</div>
+            <div class="assertion pass">✓ 提供可行建议</div>
+            <div class="assertion pass">✓ 语言共情</div>
+        </div>
+        <div class="feedback">
+            <strong>你的反馈:</strong>
+            <textarea placeholder="写下你的反馈..."></textarea>
+        </div>
+    </div>
+
+    <script>
+        function showEval(index) {
+            document.querySelectorAll('.card').forEach((card, i) => {
+                card.style.display = i === index ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>

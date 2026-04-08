@@ -1,0 +1,43 @@
+{
+  "skill_name": "psychology-helper",
+  "iteration": 1,
+  "timestamp": "2026-03-31T15:30:00Z",
+  "configurations": {
+    "with_skill": {
+      "pass_rate": 1.0,
+      "avg_tokens": 4200,
+      "avg_duration_seconds": 15,
+      "evals_passed": 3,
+      "evals_total": 3
+    }
+  },
+  "summary": {
+    "overall_pass_rate": 1.0,
+    "total_assertions": 13,
+    "passed_assertions": 13,
+    "qualitative_feedback": "技能表现良好，正确匹配心理学实验，提供结构化建议，语言温暖共情"
+  },
+  "eval_results": [
+    {
+      "eval_name": "拖延问题",
+      "pass_rate": 1.0,
+      "assertions_passed": 5,
+      "assertions_total": 5,
+      "notes": "完美匹配 17 号实验，建议实用可操作"
+    },
+    {
+      "eval_name": "自信不足",
+      "pass_rate": 1.0,
+      "assertions_passed": 4,
+      "assertions_total": 4,
+      "notes": "正确引用罗森塔尔实验，鼓励到位"
+    },
+    {
+      "eval_name": "孤独感",
+      "pass_rate": 1.0,
+      "assertions_passed": 4,
+      "assertions_total": 4,
+      "notes": "共情很好，建议考虑到用户实际情况"
+    }
+  ]
+}
