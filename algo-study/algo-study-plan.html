@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>数据结构与算法 · 无压力学习计划</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d2e;
+      --surface2: #232740;
+      --border: #2e3354;
+      --accent: #7c6af7;
+      --accent2: #56cfb2;
+      --accent3: #f5a623;
+      --text: #e2e8f0;
+      --muted: #8892a4;
+      --green: #4ade80;
+      --blue: #60a5fa;
+      --pink: #f472b6;
+      --orange: #fb923c;
+      --yellow: #fbbf24;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+      min-height: 100vh;
+      padding: 0 0 60px;
+    }
+
+    /* ── Header ── */
+    .hero {
+      background: linear-gradient(135deg, #1a1d2e 0%, #0f1117 60%);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 40px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(124,106,247,.18) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(124,106,247,.15);
+      border: 1px solid rgba(124,106,247,.3);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: .5px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(24px, 4vw, 40px);
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #e2e8f0 30%, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-top: 10px;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .stat-num {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .5px;
+    }
+
+    /* ── Progress bar ── */
+    .progress-section {
+      padding: 20px 40px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .progress-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress-bar {
+      background: var(--border);
+      border-radius: 4px;
+      height: 6px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 4px;
+      width: 0%;
+      transition: width .5s ease;
+    }
+
+    /* ── Main layout ── */
+    .main {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 0;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      border-right: 1px solid var(--border);
+      padding: 24px 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface);
+    }
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 1px;
+      padding: 0 20px 12px;
+      text-transform: uppercase;
+    }
+    .phase-nav {
+      list-style: none;
+    }
+    .phase-nav li a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all .2s;
+    }
+    .phase-nav li a:hover {
+      color: var(--text);
+      background: rgba(124,106,247,.08);
+      border-left-color: var(--accent);
+    }
+    .phase-nav li a.active {
+      color: var(--accent);
+      background: rgba(124,106,247,.12);
+      border-left-color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── Content ── */
+    .content {
+      padding: 32px 40px;
+    }
+
+    /* ── Phase card ── */
+    .phase {
+      margin-bottom: 48px;
+      scroll-margin-top: 20px;
+    }
+    .phase-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .phase-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .phase-meta {
+      flex: 1;
+    }
+    .phase-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .phase-title {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+    .phase-desc {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 6px;
+      line-height: 1.6;
+    }
+    .phase-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      align-self: flex-start;
+      margin-top: 4px;
+    }
+
+    /* ── Lesson grid ── */
+    .lessons {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    .lesson-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .lesson-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      border-radius: 2px 0 0 2px;
+    }
+    .lesson-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(124,106,247,.4);
+      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    }
+    .lesson-card.done {
+      opacity: .7;
+    }
+    .lesson-card.done .lesson-title {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+    .lesson-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .lesson-num {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .lesson-check {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: all .2s;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+    .lesson-check:hover {
+      border-color: var(--accent);
+    }
+    .lesson-check.checked {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+    .lesson-title {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .lesson-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .lesson-points li {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .lesson-points li::before {
+      content: '·';
+      color: var(--accent);
+      font-size: 16px;
+      line-height: 1;
+    }
+    .lesson-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .lesson-time {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .lesson-difficulty {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .diff-easy { background: rgba(74,222,128,.15); color: var(--green); }
+    .diff-medium { background: rgba(251,191,36,.15); color: var(--yellow); }
+    .diff-hard { background: rgba(244,114,182,.15); color: var(--pink); }
+
+    /* ── Tips card ── */
+    .tip-box {
+      background: rgba(124,106,247,.08);
+      border: 1px solid rgba(124,106,247,.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .tip-icon { font-size: 20px; flex-shrink: 0; }
+    .tip-content { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .tip-content strong { color: var(--text); }
+
+    /* ── Roadmap section ── */
+    .roadmap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+    .roadmap-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .roadmap-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      align-items: center;
+    }
+    .roadmap-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .roadmap-bubble {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .roadmap-sub {
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      max-width: 100px;
+    }
+    .roadmap-arrow {
+      font-size: 20px;
+      color: var(--muted);
+      padding: 0 4px;
+      margin-bottom: 20px;
+    }
+
+    /* ── Phase colors ── */
+    .p1 { --pc: #7c6af7; --pc-bg: rgba(124,106,247,.12); }
+    .p2 { --pc: #56cfb2; --pc-bg: rgba(86,207,178,.12); }
+    .p3 { --pc: #f5a623; --pc-bg: rgba(245,166,35,.12); }
+    .p4 { --pc: #f472b6; --pc-bg: rgba(244,114,182,.12); }
+    .p5 { --pc: #60a5fa; --pc-bg: rgba(96,165,250,.12); }
+
+    .phase-tag { color: var(--pc); }
+    .phase-icon { background: var(--pc-bg); }
+    .lesson-card::before { background: var(--pc); }
+    .phase-badge { background: var(--pc-bg); color: var(--pc); border: 1px solid rgba(128,128,128,.2); }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    @media (max-width: 768px) {
+      .main { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .hero { padding: 32px 20px 24px; }
+      .content { padding: 20px; }
+      .hero-stats { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">📘 尚硅谷 · 大模型技术</div>
+  <h1>数据结构与算法<br>无压力学习计划</h1>
+  <p>循序渐进，从基础概念到算法实战，配合 LeetCode 刷题，稳步掌握每个知识点。</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num" id="total-lessons">26</span>
+      <span class="stat-label">知识单元</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5</span>
+      <span class="stat-label">学习阶段</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" id="done-count">0</span>
+      <span class="stat-label">已完成</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" id="percent">0%</span>
+      <span class="stat-label">完成率</span>
+    </div>
+  </div>
+</div>
+
+<div class="progress-section">
+  <div class="progress-label">
+    <span>学习进度</span>
+    <span id="progress-text">0 / 26 完成</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-title">学习阶段</div>
+    <ul class="phase-nav">
+      <li><a href="#phase1" class="active">
+        <span class="nav-dot" style="background:#7c6af7"></span>第一阶段 · 基础认知
+      </a></li>
+      <li><a href="#phase2">
+        <span class="nav-dot" style="background:#56cfb2"></span>第二阶段 · 线性结构
+      </a></li>
+      <li><a href="#phase3">
+        <span class="nav-dot" style="background:#f5a623"></span>第三阶段 · 非线性结构
+      </a></li>
+      <li><a href="#phase4">
+        <span class="nav-dot" style="background:#f472b6"></span>第四阶段 · 基础算法
+      </a></li>
+      <li><a href="#phase5">
+        <span class="nav-dot" style="background:#60a5fa"></span>第五阶段 · 高阶算法
+      </a></li>
+    </ul>
+  </aside>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- Roadmap -->
+    <div class="roadmap">
+      <div class="roadmap-title">🗺️ 整体路线图</div>
+      <div class="roadmap-flow">
+        <div class="roadmap-node">
+          <div class="roadmap-bubble" style="background:rgba(124,106,247,.2);color:#a78bfa">基础概念</div>
+          <div class="roadmap-sub">数据结构 / 算法 / 复杂度</div>
+        </div>
+        <div class="roadmap-arrow">→</div>
+        <div class="roadmap-node">
+          <div class="roadmap-bubble" style="background:rgba(86,207,178,.2);color:#56cfb2">线性结构</div>
+          <div class="roadmap-sub">数组 链表 栈 队列 哈希</div>
+        </div>
+        <div class="roadmap-arrow">→</div>
+        <div class="roadmap-node">
+          <div class="roadmap-bubble" style="background:rgba(245,166,35,.2);color:#f5a623">非线性结构</div>
+          <div class="roadmap-sub">树 / 图</div>
+        </div>
+        <div class="roadmap-arrow">→</div>
+        <div class="roadmap-node">
+          <div class="roadmap-bubble" style="background:rgba(244,114,182,.2);color:#f472b6">基础算法</div>
+          <div class="roadmap-sub">查找 / 排序</div>
+        </div>
+        <div class="roadmap-arrow">→</div>
+        <div class="roadmap-node">
+          <div class="roadmap-bubble" style="background:rgba(96,165,250,.2);color:#60a5fa">高阶算法</div>
+          <div class="roadmap-sub">分治 DP 回溯 贪心</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Phase 1 ===== -->
+    <section class="phase p1" id="phase1">
+      <div class="phase-header">
+        <div class="phase-icon">🧠</div>
+        <div class="phase-meta">
+          <div class="phase-tag">第一阶段</div>
+          <div class="phase-title">基础认知：概念与复杂度</div>
+          <div class="phase-desc">建立对数据结构和算法的整体认知，理解时间 / 空间复杂度的本质，这是一切后续学习的地基。</div>
+        </div>
+        <div class="phase-badge">建议 1 周</div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-content"><strong>学习建议：</strong>先通读不求甚解，重点在理解"什么是数据结构"和"为什么需要算法分析"。复杂度只需要记住 Big-O 的概念，能看懂 O(n)、O(n²) 即可进入下一阶段。</div>
+      </div>
+
+      <div class="lessons">
+        <div class="lesson-card" id="l1">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 01</span>
+            <div class="lesson-check" onclick="toggle('l1')">✓</div>
+          </div>
+          <div class="lesson-title">什么是数据结构？</div>
+          <ul class="lesson-points">
+            <li>数据结构的定义：数据元素集合 + 关系 + 操作方法</li>
+            <li>Python 的 list/set/dict 都是高级数据结构</li>
+            <li>逻辑结构 vs 物理结构的区别</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 20 分钟</span>
+            <span class="lesson-difficulty diff-easy">基础</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l2">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 02</span>
+            <div class="lesson-check" onclick="toggle('l2')">✓</div>
+          </div>
+          <div class="lesson-title">数据结构分类</div>
+          <ul class="lesson-points">
+            <li>逻辑结构：线性（数组/链表/栈/队列）vs 非线性（树/图）</li>
+            <li>物理结构：连续存储（数组）vs 分散存储（链表）</li>
+            <li>一切数据结构都是数组+链表的组合</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 20 分钟</span>
+            <span class="lesson-difficulty diff-easy">基础</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l3">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 03</span>
+            <div class="lesson-check" onclick="toggle('l3')">✓</div>
+          </div>
+          <div class="lesson-title">算法基础与分类</div>
+          <ul class="lesson-points">
+            <li>算法的 5 大特性：输入、输出、有穷性、确定性、可行性</li>
+            <li>按目的分：搜索 / 排序 / 最优化算法</li>
+            <li>按策略分：暴力法、分治、动态规划、贪心</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 20 分钟</span>
+            <span class="lesson-difficulty diff-easy">基础</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l4">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 04</span>
+            <div class="lesson-check" onclick="toggle('l4')">✓</div>
+          </div>
+          <div class="lesson-title">时间复杂度 Big-O</div>
+          <ul class="lesson-points">
+            <li>T(n) 的概念：基本指令数 vs 绝对运行时间</li>
+            <li>最优 / 最坏 / 平均，重点关注最坏情况</li>
+            <li>O(1) < O(logn) < O(n) < O(nlogn) < O(n²)</li>
+            <li>典型案例：两数求和、二分查找、冒泡排序</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 40 分钟</span>
+            <span class="lesson-difficulty diff-medium">重点</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l5">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 05</span>
+            <div class="lesson-check" onclick="toggle('l5')">✓</div>
+          </div>
+          <div class="lesson-title">空间复杂度</div>
+          <ul class="lesson-points">
+            <li>内存空间随输入规模增大的变化趋势</li>
+            <li>时间换空间 vs 空间换时间的权衡</li>
+            <li>常见空间复杂度案例分析</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 30 分钟</span>
+            <span class="lesson-difficulty diff-medium">重点</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Phase 2 ===== -->
+    <section class="phase p2" id="phase2">
+      <div class="phase-header">
+        <div class="phase-icon">🔗</div>
+        <div class="phase-meta">
+          <div class="phase-tag">第二阶段</div>
+          <div class="phase-title">线性数据结构</div>
+          <div class="phase-desc">掌握数组、链表、栈、队列、哈希表这 5 种线性结构，理解它们的实现原理和操作复杂度。</div>
+        </div>
+        <div class="phase-badge">建议 2 周</div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-content"><strong>学习建议：</strong>每个结构都要自己动手实现一遍（Python），关注每个操作的时间复杂度。理解之后配合 LeetCode 练习 2~3 道相关题目，巩固印象。</div>
+      </div>
+
+      <div class="lessons">
+        <div class="lesson-card" id="l6">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 06</span>
+            <div class="lesson-check" onclick="toggle('l6')">✓</div>
+          </div>
+          <div class="lesson-title">数组：原理与实现</div>
+          <ul class="lesson-points">
+            <li>连续内存 + 随机访问 O(1)</li>
+            <li>创建、扩容（双倍扩容策略）</li>
+            <li>插入 O(n) / 删除 O(n) / 查找 O(n) / 访问 O(1)</li>
+            <li>完整代码实现</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 45 分钟</span>
+            <span class="lesson-difficulty diff-easy">基础</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l7">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 07</span>
+            <div class="lesson-check" onclick="toggle('l7')">✓</div>
+          </div>
+          <div class="lesson-title">链表：原理与实现</div>
+          <ul class="lesson-points">
+            <li>节点 + 指针，分散存储</li>
+            <li>插入/删除 O(1)（已知节点），访问 O(n)</li>
+            <li>单链表完整实现：增删改查遍历</li>
+            <li>与数组的对比：各自适用场景</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 50 分钟</span>
+            <span class="lesson-difficulty diff-medium">重点</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l8">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 08</span>
+            <div class="lesson-check" onclick="toggle('l8')">✓</div>
+          </div>
+          <div class="lesson-title">栈：LIFO 结构</div>
+          <ul class="lesson-points">
+            <li>后进先出（LIFO）原则</li>
+            <li>push / pop / peek 操作</li>
+            <li>经典应用：括号匹配、函数调用栈、表达式求值</li>
+            <li>用数组 or 链表实现</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 40 分钟</span>
+            <span class="lesson-difficulty diff-easy">基础</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l9">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 09</span>
+            <div class="lesson-check" onclick="toggle('l9')">✓</div>
+          </div>
+          <div class="lesson-title">队列：FIFO 结构</div>
+          <ul class="lesson-points">
+            <li>先进先出（FIFO）原则</li>
+            <li>enqueue / dequeue 操作</li>
+            <li>应用场景：BFS、任务调度</li>
+            <li>循环队列优化</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 35 分钟</span>
+            <span class="lesson-difficulty diff-easy">基础</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l10">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 10</span>
+            <div class="lesson-check" onclick="toggle('l10')">✓</div>
+          </div>
+          <div class="lesson-title">哈希表：O(1) 的魔法</div>
+          <ul class="lesson-points">
+            <li>哈希函数的作用与设计</li>
+            <li>哈希冲突：链式法 vs 开放寻址</li>
+            <li>平均 O(1) 的插入/查询/删除</li>
+            <li>完整实现 + 负载因子与扩容</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 60 分钟</span>
+            <span class="lesson-difficulty diff-medium">重点</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Phase 3 ===== -->
+    <section class="phase p3" id="phase3">
+      <div class="phase-header">
+        <div class="phase-icon">🌳</div>
+        <div class="phase-meta">
+          <div class="phase-tag">第三阶段</div>
+          <div class="phase-title">非线性结构：树与图</div>
+          <div class="phase-desc">树和图是更复杂的数据结构，也是面试高频考点。重点掌握二叉搜索树和图的遍历算法。</div>
+        </div>
+        <div class="phase-badge">建议 2 周</div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-content"><strong>学习建议：</strong>树的遍历（前序/中序/后序/层序）要烂熟于心。图的 DFS/BFS 遍历先理解思想，再看代码，这两个遍历是所有图算法的基础。</div>
+      </div>
+
+      <div class="lessons">
+        <div class="lesson-card" id="l11">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 11</span>
+            <div class="lesson-check" onclick="toggle('l11')">✓</div>
+          </div>
+          <div class="lesson-title">树的基本概念</div>
+          <ul class="lesson-points">
+            <li>树的术语：根、叶、高度、深度、度</li>
+            <li>二叉树：每个节点最多 2 个子节点</li>
+            <li>存储结构：链式表示 vs 数组表示</li>
+            <li>常见特殊二叉树：满二叉树、完全二叉树</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 35 分钟</span>
+            <span class="lesson-difficulty diff-easy">基础</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l12">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 12</span>
+            <div class="lesson-check" onclick="toggle('l12')">✓</div>
+          </div>
+          <div class="lesson-title">二叉搜索树（BST）操作</div>
+          <ul class="lesson-points">
+            <li>BST 性质：左 < 根 < 右</li>
+            <li>查找：O(logn) 平均，O(n) 最坏</li>
+            <li>插入 + 删除（三种情况）</li>
+            <li>完整 Python 实现</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 60 分钟</span>
+            <span class="lesson-difficulty diff-hard">进阶</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l13">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 13</span>
+            <div class="lesson-check" onclick="toggle('l13')">✓</div>
+          </div>
+          <div class="lesson-title">二叉树的 4 种遍历</div>
+          <ul class="lesson-points">
+            <li>前序遍历：根 → 左 → 右</li>
+            <li>中序遍历：左 → 根 → 右（BST 输出有序）</li>
+            <li>后序遍历：左 → 右 → 根</li>
+            <li>层序遍历（BFS）：按层从上到下</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 50 分钟</span>
+            <span class="lesson-difficulty diff-medium">重点</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l14">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 14</span>
+            <div class="lesson-check" onclick="toggle('l14')">✓</div>
+          </div>
+          <div class="lesson-title">图的概念与表示</div>
+          <ul class="lesson-points">
+            <li>有向图 vs 无向图，带权图 vs 无权图</li>
+            <li>邻接矩阵：直观，空间 O(V²)</li>
+            <li>邻接表：节省空间，常用表示</li>
+            <li>度（入度/出度）的概念</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 40 分钟</span>
+            <span class="lesson-difficulty diff-medium">重点</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l15">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 15</span>
+            <div class="lesson-check" onclick="toggle('l15')">✓</div>
+          </div>
+          <div class="lesson-title">图的遍历：DFS & BFS</div>
+          <ul class="lesson-points">
+            <li>深度优先搜索（DFS）：栈/递归，探到底再回溯</li>
+            <li>广度优先搜索（BFS）：队列，一层层扩散</li>
+            <li>已访问标记防止死循环</li>
+            <li>适用场景对比</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 55 分钟</span>
+            <span class="lesson-difficulty diff-hard">进阶</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Phase 4 ===== -->
+    <section class="phase p4" id="phase4">
+      <div class="phase-header">
+        <div class="phase-icon">⚡</div>
+        <div class="phase-meta">
+          <div class="phase-tag">第四阶段</div>
+          <div class="phase-title">基础算法：查找与排序</div>
+          <div class="phase-desc">掌握最常用的查找和排序算法，从简单到复杂，理解每种算法的思路、复杂度和适用场景。</div>
+        </div>
+        <div class="phase-badge">建议 2 周</div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-content"><strong>学习建议：</strong>排序算法不要死记代码，而是理解每种算法的核心思想。归并排序和快速排序的分治思想非常重要，会在后续算法阶段反复用到。<br>🎯 LeetCode 推荐：<strong>LC-704（二分）/ LC-169（多数元素）</strong></div>
+      </div>
+
+      <div class="lessons">
+        <div class="lesson-card" id="l16">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 16</span>
+            <div class="lesson-check" onclick="toggle('l16')">✓</div>
+          </div>
+          <div class="lesson-title">二分查找</div>
+          <ul class="lesson-points">
+            <li>前提：有序数组</li>
+            <li>每次缩减一半，O(logn)</li>
+            <li>边界处理：left ≤ right vs left < right</li>
+            <li>LeetCode 704：标准二分</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 40 分钟</span>
+            <span class="lesson-difficulty diff-easy">基础</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l17">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 17</span>
+            <div class="lesson-check" onclick="toggle('l17')">✓</div>
+          </div>
+          <div class="lesson-title">查找多数元素（Boyer-Moore）</div>
+          <ul class="lesson-points">
+            <li>摩尔投票算法：O(n) 时间，O(1) 空间</li>
+            <li>出现次数 > n/2 的元素一定存在</li>
+            <li>LeetCode 169：多数元素</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 35 分钟</span>
+            <span class="lesson-difficulty diff-medium">重点</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l18">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 18</span>
+            <div class="lesson-check" onclick="toggle('l18')">✓</div>
+          </div>
+          <div class="lesson-title">O(n²) 排序三兄弟</div>
+          <ul class="lesson-points">
+            <li>冒泡排序：相邻比较，最简单</li>
+            <li>选择排序：每轮找最小，交换到前面</li>
+            <li>插入排序：像打牌，插入有序区</li>
+            <li>三者对比：稳定性 / 最好最坏情况</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 50 分钟</span>
+            <span class="lesson-difficulty diff-easy">基础</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l19">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 19</span>
+            <div class="lesson-check" onclick="toggle('l19')">✓</div>
+          </div>
+          <div class="lesson-title">归并排序 O(nlogn)</div>
+          <ul class="lesson-points">
+            <li>分治思想：分割 → 递归排序 → 合并</li>
+            <li>稳定排序，O(n) 额外空间</li>
+            <li>理解递归树，每层 O(n) 总共 O(logn) 层</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 50 分钟</span>
+            <span class="lesson-difficulty diff-medium">重点</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l20">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 20</span>
+            <div class="lesson-check" onclick="toggle('l20')">✓</div>
+          </div>
+          <div class="lesson-title">快速排序 + 堆排序</div>
+          <ul class="lesson-points">
+            <li>快排：选 pivot，分区，递归；平均 O(nlogn)</li>
+            <li>最坏 O(n²)，随机化可优化</li>
+            <li>堆排序：构建最大堆 + 反复提取根</li>
+            <li>堆排序 O(nlogn) 且不需要额外空间</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 60 分钟</span>
+            <span class="lesson-difficulty diff-hard">进阶</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Phase 5 ===== -->
+    <section class="phase p5" id="phase5">
+      <div class="phase-header">
+        <div class="phase-icon">🚀</div>
+        <div class="phase-meta">
+          <div class="phase-tag">第五阶段</div>
+          <div class="phase-title">高阶算法：分治 · DP · 回溯 · 贪心</div>
+          <div class="phase-desc">算法设计的四大范式，是解决复杂问题的核心工具。结合 LeetCode 经典题目理解每种范式的应用场景。</div>
+        </div>
+        <div class="phase-badge">建议 3 周</div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-content"><strong>学习建议：</strong>动态规划是最难的部分，不要急，先从"爬楼梯"这类简单 DP 入手，重点理解"状态定义"和"状态转移方程"。回溯算法记住三步：选择 → 递归 → 撤销。<br>🎯 LeetCode 推荐：<strong>LC-70（爬楼梯）/ LC-53（最大子数组）/ LC-46（全排列）</strong></div>
+      </div>
+
+      <div class="lessons">
+        <div class="lesson-card" id="l21">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 21</span>
+            <div class="lesson-check" onclick="toggle('l21')">✓</div>
+          </div>
+          <div class="lesson-title">分治算法</div>
+          <ul class="lesson-points">
+            <li>三步：分解 → 递归求解 → 合并</li>
+            <li>案例一：汉诺塔（经典递归）</li>
+            <li>案例二：Karatsuba 大整数乘法</li>
+            <li>适用条件：子问题相互独立</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 50 分钟</span>
+            <span class="lesson-difficulty diff-medium">重点</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l22">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 22</span>
+            <div class="lesson-check" onclick="toggle('l22')">✓</div>
+          </div>
+          <div class="lesson-title">动态规划入门</div>
+          <ul class="lesson-points">
+            <li>核心：最优子结构 + 重叠子问题</li>
+            <li>DP 三步：定义状态 → 状态转移方程 → 初始值</li>
+            <li>案例：爬楼梯 f(n) = f(n-1) + f(n-2)</li>
+            <li>LeetCode 70</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 60 分钟</span>
+            <span class="lesson-difficulty diff-medium">重点</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l23">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 23</span>
+            <div class="lesson-check" onclick="toggle('l23')">✓</div>
+          </div>
+          <div class="lesson-title">动态规划进阶：背包问题</div>
+          <ul class="lesson-points">
+            <li>最大子数组之和：f(i) = max(f(i-1)+nums[i], nums[i])</li>
+            <li>0-1 背包：每件物品只能选 0 次或 1 次</li>
+            <li>完全背包：物品可无限选取</li>
+            <li>一维数组空间优化技巧</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 90 分钟</span>
+            <span class="lesson-difficulty diff-hard">进阶</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l24">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 24</span>
+            <div class="lesson-check" onclick="toggle('l24')">✓</div>
+          </div>
+          <div class="lesson-title">回溯算法</div>
+          <ul class="lesson-points">
+            <li>试错思想：选择 → 递归 → 撤销（回溯）</li>
+            <li>案例一：全排列（LeetCode 46）</li>
+            <li>案例二：N 皇后（LeetCode 51）</li>
+            <li>剪枝优化：减少无效搜索</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 70 分钟</span>
+            <span class="lesson-difficulty diff-hard">进阶</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l25">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 25</span>
+            <div class="lesson-check" onclick="toggle('l25')">✓</div>
+          </div>
+          <div class="lesson-title">贪心算法</div>
+          <ul class="lesson-points">
+            <li>局部最优 → 全局最优（不总是成立）</li>
+            <li>适用条件：贪心选择性质 + 最优子结构</li>
+            <li>案例一：最大交换（LeetCode 670）</li>
+            <li>案例二：分发糖果（LeetCode 135）</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 60 分钟</span>
+            <span class="lesson-difficulty diff-hard">进阶</span>
+          </div>
+        </div>
+
+        <div class="lesson-card" id="l26">
+          <div class="lesson-header">
+            <span class="lesson-num">Lesson 26</span>
+            <div class="lesson-check" onclick="toggle('l26')">✓</div>
+          </div>
+          <div class="lesson-title">🎯 综合复习 + LeetCode 冲刺</div>
+          <ul class="lesson-points">
+            <li>回顾整体脑图：5 个阶段的核心知识</li>
+            <li>LeetCode Top Interview 150 刷题计划</li>
+            <li>链接：leetcode.cn/studyplan/top-interview-150/</li>
+            <li>按类别刷题：数组→链表→树→DP→回溯</li>
+          </ul>
+          <div class="lesson-footer">
+            <span class="lesson-time">⏱ 持续进行</span>
+            <span class="lesson-difficulty diff-medium">实战</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+  const TOTAL = 26;
+  const KEY = 'algo_progress';
+
+  function getState() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; }
+  }
+  function saveState(s) {
+    localStorage.setItem(KEY, JSON.stringify(s));
+  }
+
+  function toggle(id) {
+    const state = getState();
+    state[id] = !state[id];
+    saveState(state);
+    render(state);
+  }
+
+  function render(state) {
+    const done = Object.values(state).filter(Boolean).length;
+    document.getElementById('done-count').textContent = done;
+    document.getElementById('percent').textContent = Math.round(done/TOTAL*100) + '%';
+    document.getElementById('progress-text').textContent = done + ' / ' + TOTAL + ' 完成';
+    document.getElementById('progress-fill').style.width = (done/TOTAL*100) + '%';
+
+    for (let i = 1; i <= TOTAL; i++) {
+      const id = 'l' + i;
+      const card = document.getElementById(id);
+      const check = card?.querySelector('.lesson-check');
+      if (!card || !check) continue;
+      if (state[id]) {
+        card.classList.add('done');
+        check.classList.add('checked');
+        check.textContent = '✓';
+      } else {
+        card.classList.remove('done');
+        check.classList.remove('checked');
+        check.textContent = '✓';
+      }
+    }
+  }
+
+  // Sidebar active nav
+  function updateNav() {
+    const phases = document.querySelectorAll('.phase');
+    const links = document.querySelectorAll('.phase-nav a');
+    let active = 'phase1';
+    phases.forEach(p => {
+      const rect = p.getBoundingClientRect();
+      if (rect.top < window.innerHeight / 2) active = p.id;
+    });
+    links.forEach(l => {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + active);
+    });
+  }
+
+  window.addEventListener('scroll', updateNav);
+  render(getState());
+</script>
+</body>
+</html>
