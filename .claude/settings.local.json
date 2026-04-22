@@ -36,7 +36,27 @@
       "WebFetch(domain:deepseek.ai)",
       "WebFetch(domain:ar5iv.org)",
       "WebFetch(domain:deepmind.google)",
-      "Bash(opencli-rs arxiv:*)"
+      "Bash(opencli-rs arxiv:*)",
+      "Bash(ollama list *)",
+      "Bash(ollama ps *)",
+      "Bash(system_profiler SPDisplaysDataType)",
+      "Bash(cat ~/.zshrc_ollama_opt)",
+      "Bash(rm ~/.zshrc_ollama_opt)",
+      "Bash(launchctl stop *)",
+      "Bash(pkill ollama *)",
+      "Bash(launchctl start *)",
+      "Bash(ollama run *)",
+      "Bash(OLLAMA_HOST=127.0.0.1:11434 curl -s http://127.0.0.1:11434/api/tags)",
+      "Bash(ollama pull *)",
+      "Bash(ollama stop *)",
+      "Bash(ollama search *)",
+      "Bash(sysctl -n machdep.cpu.brand_string)",
+      "Bash(sysctl -n hw.physicalcpu)",
+      "Bash(launchctl unsetenv *)",
+      "Bash(ollama rm *)",
+      "Bash(ollama show *)",
+      "Bash(node *)",
+      "Bash(pip install *)"
     ]
   }
 }
