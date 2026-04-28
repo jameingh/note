@@ -10,7 +10,6 @@ npm i -g browser-use
 npm install -g @anthropic-ai/claude-code
 npm install -g @jackwener/opencli
 npm install -g bb-browser
-curl -fsSL https://pinchtab.com/install.sh | bash
 npm install -g @tencent-ai/codebuddy-code
 npx skills add tw93/Waza -g -y
 npx skills add jackwener/opencli -g -y
