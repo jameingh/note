@@ -37,7 +37,7 @@
 假设数组长度为 `n`：
 
 - 读取 `arr[i]`：常数级
-- 在尾部追加（容量足够）：常数级，因为数组是连续存储的，所以在尾部追加的时间复杂度是O(1)。
+- 在尾部追加（容量足够）：常数级，因为数组是连续存储的，所以在尾部追加的时间复杂度是O(1)。单次扩容会慢，但长期平均追加依然很快（均摊意义上接近常数）。
 - 在头部插入：线性级，因为数组是连续存储的，所以需要将后面的元素向后移动，所以时间复杂度是O(n)。
 - 查找某个值（无序数组）：线性级，因为需要遍历数组，所以时间复杂度是O(n)。
 
@@ -62,8 +62,10 @@ class MyArray:
         # TODO 1: 扩容为原来的 2 倍
         self.capacity = self.capacity * 2
         # TODO 2: 把旧数据拷贝到新数组
-        self.data = self.data + [None] * (self.capacity - self.size)
-        return self.data
+        new_data = [None] * self.capacity
+        for i in range(self.size):
+            new_data[i] = self.data[i]
+        self.data = new_data
 
     def append(self, val):
         # TODO 3: 容量满时先扩容
